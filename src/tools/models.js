@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-mongoose.connect('mongodb://localhost:27017/test')
 
 const Tool = mongoose.model("Tool", {
     title: String,
@@ -7,3 +6,5 @@ const Tool = mongoose.model("Tool", {
     description: String,
     tags: [String]
 })
+
+export default Tool
