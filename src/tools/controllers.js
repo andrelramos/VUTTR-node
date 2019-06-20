@@ -1,16 +1,45 @@
+import { Types } from "mongoose"
 import Tool from "./models"
 
-const controller = {}
-
-controller.getAll = async () => {
-    result = await Tool.find({}).exec()
+export async function getTools(tag = null) {
+    let result = {}
+    console.log(tag)
+    try {
+        if(tag ) {
+            result = Tool.find({"tags": {"$in": [tag]}}).exec()
+        } else {
+            result = Tool.find().exec()
+        }
+    } catch(e) {
+        console.log(e)
+        result = {"error": "Wasn't possible to find tools."}
+    }
     return result
 }
 
-controller.saveTool = async () => {
-    const tool = new Tool({ title: 'Zildjian', link: 'haha', description: "bbbbb", tags: ["t", "a", "g"]})
-    await tool.save()
-    console.log('foi salvo')
+export async function saveTool(toolData) {  
+    let result = {}
+
+    try {
+        let tool = new Tool(toolData)
+        result = await tool.save()
+    } catch(e) {
+        console.log(e)
+        result = {"error": "Wasn't possible save the new tool."}
+    }
+
+    return result
 }
 
-export default controller
+export async function deleteTool(toolId) {
+    let result = {}
+
+    try {
+        result = Tool.findByIdAndDelete({"_id": new Types.ObjectId(toolId)}).exec()
+    } catch(e) {
+        console.log(e)
+        result = {"error": "Wasn't possible save the new tool."}
+    }
+
+    return result
+}

@@ -1,17 +1,22 @@
 import express from 'express'
-import toolsController  from './controllers'
+import {saveTool, getTools, deleteTool}  from './controllers'
 
 const router = express.Router()
 
 /* GET users listing. */
-router.get('/', (req, res, next) => {
-  console.log(toolsController.getAll())
-  res.send(JSON.stringify(toolsController.getAll()));
+router.get('/', async (req, res, next) => {
+  let result = await getTools(req.query.tag)
+  res.send(JSON.stringify(result));
 });
 
-router.post('/', (req, res, next) => {
-  toolsController.saveTool()
-  res.send("Foi salvo")
+router.post('/', async (req, res, next) => {
+  let result = await saveTool(req.body)
+  res.send(JSON.stringify(result))
+})
+
+router.delete('/:id', async (req, res, next) => {
+  let result = await deleteTool(req.params.id)
+  res.send(JSON.stringify(result))
 })
 
 module.exports = router
