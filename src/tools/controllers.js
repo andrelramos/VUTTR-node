@@ -5,7 +5,7 @@ export async function getTools(tag = null) {
     let result = {}
     console.log(tag)
     try {
-        if(tag ) {
+        if(tag) {
             result = Tool.find({"tags": {"$in": [tag]}}).exec()
         } else {
             result = Tool.find().exec()
