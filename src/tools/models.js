@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const Tool = mongoose.model("Tool", {
-    title: String,
-    link: String,
-    description: String,
+    title: {type: String, required: true},
+    link: {type: String, required: true},
+    description: {type: String, required: false},
     tags: [String]
 })
 
