@@ -4,7 +4,7 @@ beforeEach('test hooks', (done) => {
     // TODO get the database url from an env
     mongoose.connect('mongodb://localhost:27017/test', () => {
         /* Drop the DB */
-        mongoose.connection.db.dropDatabase();
+        mongoose.connection.db.dropDatabase()
         done()
     })
 })

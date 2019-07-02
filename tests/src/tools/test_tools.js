@@ -1,7 +1,7 @@
-import chai from "chai"
-import chaiHttp from "chai-http"
-import app from "../../../app"
-import Tool from    "../../../src/tools/models"
+const chai = require('chai')
+const chaiHttp = require('chai-http')
+const app = require('../../../app')
+const Tool = require('../../../src/tools/models')
 
 chai.use(chaiHttp)
 chai.should()

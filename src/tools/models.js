@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose")
 
 const Tool = mongoose.model("Tool", {
     title: {type: String, required: true},
@@ -7,4 +7,4 @@ const Tool = mongoose.model("Tool", {
     tags: [String]
 })
 
-export default Tool
+module.exports = Tool

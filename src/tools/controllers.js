@@ -1,7 +1,7 @@
-import { Types } from "mongoose"
-import Tool from "./models"
+const mongoose = require("mongoose")
+const Tool = require("./models.js")
 
-export async function getTools(tag = null) {
+async function getTools(tag = null) {
     let result = {}
     console.log(tag)
     try {
@@ -17,7 +17,7 @@ export async function getTools(tag = null) {
     return result
 }
 
-export async function saveTool(toolData) {  
+async function saveTool(toolData) {  
     let result = {}
 
     try {
@@ -31,11 +31,11 @@ export async function saveTool(toolData) {
     return result
 }
 
-export async function deleteTool(toolId) {
+async function deleteTool(toolId) {
     let result = {}
 
     try {
-        result = Tool.findByIdAndDelete({"_id": new Types.ObjectId(toolId)}).exec()
+        result = Tool.findByIdAndDelete({"_id": new mongoose.Types.ObjectId(toolId)}).exec()
     } catch(e) {
         console.log(e)
         result = {"error": "Wasn't possible save the new tool."}
@@ -43,3 +43,5 @@ export async function deleteTool(toolId) {
 
     return result
 }
+
+module.exports = {getTools, saveTool, deleteTool}

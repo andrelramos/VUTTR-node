@@ -1,24 +1,24 @@
-import express from 'express'
-import { responseStatusParser } from '../parsers'
-import {saveTool, getTools, deleteTool}  from './controllers'
+const express = require('express')
+const parsers = require('../parsers')
+const controller = require('./controllers.js')
 
 const router = express.Router()
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
-  let result = await getTools(req.query.tag)
-  responseStatusParser(res, result)
+  let result = await controller.getTools(req.query.tag)
+  parsers.responseStatusParser(res, result)
   res.json(result)
 });
 
 router.post('/', async (req, res, next) => {
-  let result = await saveTool(req.body)
-  responseStatusParser(res, result)
+  let result = await controller.saveTool(req.body)
+  parsers.responseStatusParser(res, result)
   res.json(result)
 })
 
 router.delete('/:id', async (req, res, next) => {
-  let result = await deleteTool(req.params.id)
+  let result = await controller.deleteTool(req.params.id)
   responseStatusParser(res, result)
   res.json(result)
 })

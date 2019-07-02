@@ -1,0 +1,31 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "VUTTR (Very Useful Tools to Remember) API",
+    "description": "API to store and manage very useful tools to remember. Using it you can save, read and delete tools in database",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/tools": {
+      "get": {
+        "summary": "Return a list with saved tools",
+        "description": "This API return a list with saved tools. You can use the tag argument to filter tools that contains the informed tag",
+        "responses": {
+          "200": {
+            "descripion": "A JSON array of saved tools",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,24 +1,22 @@
-import mongoose from "mongoose";
+var mongoose = require('mongoose')
+var express = require('express')
+var logger = require('morgan')
+var swaggerUi = require('swagger-ui-express')
+var indexRouter = require('./routes/index')
+var toolsRouter = require('./src/tools/routes')
+var swaggerDocument = require('./swagger.json')
 
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var app = express()
 
-var indexRouter = require('./routes/index');
-var toolsRouter = require('./src/tools/routes');
+app.use(logger('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
-var app = express();
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/tools', toolsRouter);
+app.use('/', indexRouter)
+app.use('/tools', toolsRouter)
 
 mongoose.connect('mongodb://localhost:27017/test',  {useNewUrlParser: true})  // TODO deixar link em um env
 
-module.exports = app;
+module.exports = app
