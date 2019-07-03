@@ -11,15 +11,108 @@
       "description": "development server"
     }
   ],
+  "components": {
+    "schemas": {
+      "ObjectId": {
+        "type": "string",
+        "format": "hex",
+        "example": "54759eb3c090d83494e2d804"
+      },
+      "Tool": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Notion"
+          },
+          "link": {
+            "type": "string",
+            "format": "url",
+            "example": "https://notion.so"
+          },
+          "description": {
+            "type": "string",
+            "example": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "organization",
+              "planning",
+              "collaboration",
+              "writing",
+              "calendar"
+            ]
+          }
+        }
+      },
+      "SavedTool": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/ObjectId"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/Tool"
+          }
+        ]
+      }
+    }
+  },
   "paths": {
+    "/tools/{id}": {
+      "delete": {
+        "summary": "Delete a tool from database",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Id of tool that must be deleted",
+            "schema":{
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful delete"
+          }
+        }
+      }
+    },
     "/tools": {
       "post": {
-        "summary": "Save a new tool in database"
-
-      },
-      "delete": {
-        "summary": "Delete a tool from database"
-
+        "summary": "Save a new tool in database",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tool"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the saved tools",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedTool"
+                }
+              }
+            }
+          }
+        }
       },
       "get": {
         "summary": "Return a list with saved tools",
@@ -44,40 +137,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "format": "hex",
-                        "example": "54759eb3c090d83494e2d804"
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "Notion"
-                      },
-                      "link": {
-                        "type": "string",
-                        "format": "url",
-                        "example": "https://notion.so"
-                      },
-                      "description": {
-                        "type": "string",
-                        "example": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized."
-                      },
-                      "tags": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        },
-                        "example": [
-                          "organization",
-                          "planning",
-                          "collaboration",
-                          "writing",
-                          "calendar"
-                        ]
-                      }
-                    }
+                    "$ref": "#/components/schemas/SavedTool"
                   }
                 }
               }

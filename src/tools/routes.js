@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
   let result = await controller.deleteTool(req.params.id)
-  responseStatusParser(res, result)
+  parsers.responseStatusParser(res, result)
   res.json(result)
 })
 
