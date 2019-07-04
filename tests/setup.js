@@ -1,8 +1,7 @@
 beforeEach('test hooks', (done) => {
     let mongoose = require('mongoose')
     /* Connect to the DB */
-    // TODO get the database url from an env
-    mongoose.connect('mongodb://localhost:27017/test', () => {
+    mongoose.connect(process.env.MONGO_URI, () => {
         /* Drop the DB */
         mongoose.connection.db.dropDatabase()
         done()
