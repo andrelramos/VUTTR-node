@@ -10,11 +10,7 @@ COPY . /app
 RUN npm i
 
 # Make port 3000 available to the world outside this container
-EXPOSE 300
-
-# Define environment variable
-COPY local.env env.env
-RUN source /env.env
+EXPOSE 3000
 
 # Run app.py when the container launches
 CMD ["npm", "run", "start"]

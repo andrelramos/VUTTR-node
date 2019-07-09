@@ -1,0 +1,24 @@
+version: '3'
+services:
+  vuttr:
+    build: .
+    ports:
+      - 3000:3000
+    links:
+      - mongo
+    networks:
+      - mynet
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/vuttr
+      - PORT=3000
+
+  mongo:
+    image: "mongo:3.6"
+    ports:
+      - 27017:27017
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge
