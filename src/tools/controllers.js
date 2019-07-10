@@ -8,16 +8,28 @@ async function getTools(tag = null) {
     } else {
         result = await Tool.find().exec()
     }
-    return result
+    return result.map((tool) => {
+        return formatTool(tool)
+    })
 }
 
 async function saveTool(toolData) {  
     let tool = new Tool(toolData)
-    return await tool.save()
+    return formatTool(await tool.save())
 }
 
 async function deleteTool(toolId) {
-    return await Tool.findByIdAndDelete({"_id": new mongoose.Types.ObjectId(toolId)}).exec()
+    Tool.findByIdAndDelete({"_id": new mongoose.Types.ObjectId(toolId)}).exec()
+}
+
+function formatTool(tool) {
+    return {
+        "tags": tool.tags,
+        "id": tool._id,
+        "title": tool.title,
+        "link": tool.link,
+        "description": tool.description,
+    }
 }
 
 module.exports = {getTools, saveTool, deleteTool}
