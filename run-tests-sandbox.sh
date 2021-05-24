@@ -1,3 +1,11 @@
+#################################################
+#                                               # 
+#  This script runs the command "npm run test"  #
+# in an environment sandbox with a mongodb      #
+# instance for tests                            #
+#                                               #           
+#################################################
+
 # SETTING TEST ENVS
  export MONGO_URI=mongodb://mongo:27017/vuttrtest
 
