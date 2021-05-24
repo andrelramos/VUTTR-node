@@ -1,0 +1,32 @@
+name: tests
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on pull request events but only for the master branch
+  pull_request:
+    branches: [ master ]
+
+  # Allows to run this workflow manually
+  workflow_dispatch:
+
+jobs:
+  unittests:
+    name: run node unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      # Get package.json nodejs version
+      - run: |
+          echo ""::set-env name=NODE_VERSION::$(cat package.json | jq .engines.node)"
+
+      # Installing nodejs
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      
+      # Installing dependencies
+      - run: npm ci
+
+      # Running tests
+      - run: sh run-tests-sandbox.sh
