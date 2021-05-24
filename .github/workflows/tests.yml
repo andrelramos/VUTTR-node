@@ -18,7 +18,7 @@ jobs:
       
       # Get package.json nodejs version
       - run: |
-          echo "NODE_VERSION=$(cat package.json | jq .engines.node)" >> $GITHUB_ENV
+          echo "NODE_VERSION=$(cat package.json | jq .engines.node | sed 's/"//g')" >> $GITHUB_ENV
 
       # Installing nodejs
       - uses: actions/setup-node@v2
