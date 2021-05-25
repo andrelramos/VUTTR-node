@@ -7,7 +7,7 @@
     "npm": "^6.9.0"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint *.js src/**",
+    "lint": "./node_modules/.bin/eslint *.js src/** tests/**",
     "start": "node app.js",
     "test": "mocha ./tests --recursive"
   },
