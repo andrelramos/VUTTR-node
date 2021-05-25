@@ -1,34 +1,34 @@
-const express = require('express')
-const controller = require('./controllers.js')
+const express = require('express');
+const controller = require('./controllers');
 
-const router = express.Router()
+const router = express.Router();
 
 /* GET users listing. */
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
   try {
-    let result = await controller.getTools(req.query.tag)
-    res.json(result)
+    const result = await controller.getTools(req.query.tag);
+    res.json(result);
   } catch {
-    res.status(404)
+    res.status(404);
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
   try {
-    let result = await controller.saveTool(req.body)
-    res.json(result)
+    const result = await controller.saveTool(req.body);
+    res.json(result);
   } catch {
-    res.status(404)
+    res.status(404);
   }
-})
+});
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', async (req, res) => {
   try {
-    let result = await controller.deleteTool(req.params.id)
-    res.json(result)
+    const result = await controller.deleteTool(req.params.id);
+    res.json(result);
   } catch {
-    res.status(404)
+    res.status(404);
   }
-})
+});
 
-module.exports = router
+module.exports = router;
