@@ -28,5 +28,8 @@ jobs:
       # Installing dependencies
       - run: npm ci
 
+      # Running linter
+      - run: npm run lint
+
       # Running tests
       - run: sh run-tests-sandbox.sh
