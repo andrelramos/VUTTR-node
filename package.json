@@ -7,7 +7,7 @@
     "npm": "^6.9.0"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint src/**",
+    "lint": "./node_modules/.bin/eslint *.js src/**",
     "start": "node app.js",
     "test": "mocha ./tests --recursive"
   },
@@ -21,7 +21,8 @@
     "express": "^4.17.1",
     "mongodb": "^3.2.7",
     "mongoose": "^5.5.13",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "swagger-ui-express": "^4.0.6"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -29,9 +30,9 @@
     "eslint": "^7.27.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-security": "^1.4.0",
     "mocha": "^6.1.4",
     "pre-commit": "^1.2.2",
-    "rimraf": "^2.6.3",
-    "swagger-ui-express": "^4.0.6"
+    "rimraf": "^2.6.3"
   }
 }
