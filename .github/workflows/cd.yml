@@ -13,12 +13,13 @@ jobs:
   deploy_on_cloud_run:
     name: Deploy app on Google Cloud Run
     runs-on: ubuntu-latest
+    env:
+      REGISTRY_URL: gcr.io/vuttr-bossabox-314921/vuttr
     steps:
       - uses: actions/checkout@v2
       
       # Get package.json nodejs version
       - run: |
-          echo "REGISTRY_URL=gcr.io/vuttr-bossabox-314921/vuttr" >> $GITHUB_ENV
           echo "TAG=${{ env.REGISTRY_URL }}:$(cat package.json | jq .engines.node | sed 's/"//g')" >> $GITHUB_ENV
 
       # Setup gcloud CLI
