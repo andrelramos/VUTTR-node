@@ -20,9 +20,6 @@ jobs:
         image: mongo:3.6
         options: >-
           --tmpfs /data/db
-          --storageEngine ephemeralForTest 
-          --nojournal 
-          --logpath /dev/null
         ports: 
           - 27017:27017
     steps:
