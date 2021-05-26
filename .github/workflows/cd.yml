@@ -37,7 +37,7 @@ jobs:
       # Build the Docker image
       - name: Build
         run: |
-          docker build -t ${{ env.TAG }}
+          docker build -t ${{ env.TAG }} .
 
       # Push the Docker image to Google Container Registry
       - name: Publish
