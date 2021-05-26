@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const controller = require('./controllers');
 
 const router = express.Router();
@@ -10,8 +11,16 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const result = await controller.saveTool(req.body);
-  res.json(result);
+  try {
+    const result = await controller.saveTool(req.body);
+    res.json(result);
+  } catch (err) {
+    if (err instanceof mongoose.Error.ValidationError) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(500);
+    }
+  }
 });
 
 router.delete('/:id', async (req, res) => {

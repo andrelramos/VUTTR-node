@@ -95,38 +95,46 @@ describe('POST /tools', () => {
         res.should.have.status(200);
         res.body.should.be.a('object');
 
-        Object.entries(dataToSave).forEach((prop, value) => {
-          chai.assert.deepEqual(value, res.body[`${prop}`]);
+        Object.entries(dataToSave).forEach((prop) => {
+          chai.assert.deepEqual(prop[1], res.body[`${prop[0]}`]);
         });
 
         done();
       });
   });
 
-  it('try save invalid tools', (done) => {
-    const testCases = [
-      { // No title
-        link: 'test-link',
-        description: 'test-description',
-        tags: ['tag1', 'tag2'],
-      },
-      { // No link
-        title: 'test-title',
-        description: 'test-description',
-        tags: ['tag1', 'tag2'],
-      },
-    ];
+  it('try save invalid tools (no title)', (done) => {
+    const item = { // No title
+      link: 'test-link',
+      description: 'test-description',
+      tags: ['tag1', 'tag2'],
+    };
 
-    testCases.forEach((item) => {
-      chai.request(app)
-        .post('/tools')
-        .type('application/json')
-        .send(item)
-        .end((err, res) => {
-          res.should.have.status(404);
-        });
-    });
-    done();
+    chai.request(app)
+      .post('/tools')
+      .type('application/json')
+      .send(item)
+      .end((err, res) => {
+        res.should.have.status(400);
+        done();
+      });
+  });
+
+  it('try save invalid tools (no link)', (done) => {
+    const item = { // No title
+      title: 'test-title',
+      description: 'test-description',
+      tags: ['tag1', 'tag2'],
+    };
+
+    chai.request(app)
+      .post('/tools')
+      .type('application/json')
+      .send(item)
+      .end((err, res) => {
+        res.should.have.status(400);
+        done();
+      });
   });
 });
 
@@ -138,7 +146,7 @@ describe('DELETE /tools/:id', () => {
       description: 'test-description',
       tags: ['tag1', 'tag2'],
     });
-    tool.save((result) => {
+    tool.save((err, result) => {
       chai.request(app)
         .del(`/tools/${result.id}`)
         .end((errId, resId) => {

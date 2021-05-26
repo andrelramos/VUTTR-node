@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint *.js src/** tests/**",
     "start": "node app.js",
-    "test": "mocha ./tests --recursive"
+    "test": "mocha ./tests --recursive --exit"
   },
   "pre-commit": [
     "lint"

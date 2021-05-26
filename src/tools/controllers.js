@@ -24,11 +24,13 @@ async function getTools(tag = null) {
 
 async function saveTool(toolData) {
   const tool = new Tool(toolData);
+  await tool.validate();
+
   return formatTool(await tool.save());
 }
 
 async function deleteTool(toolId) {
-  Tool.findByIdAndDelete({ _id: new mongoose.Types.ObjectId(toolId) }).exec();
+  await Tool.findByIdAndDelete({ _id: new mongoose.Types.ObjectId(toolId) }).exec();
 }
 
 module.exports = { getTools, saveTool, deleteTool };
