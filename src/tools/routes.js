@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const result = await controller.saveTool(req.body);
-    res.json(result);
+    res.status(201).json(result);
   } catch (err) {
     if (err instanceof mongoose.Error.ValidationError) {
       res.sendStatus(400);
@@ -24,8 +24,8 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-  const result = await controller.deleteTool(req.params.id);
-  res.json(result);
+  await controller.deleteTool(req.params.id);
+  res.sendStatus(204);
 });
 
 module.exports = router;

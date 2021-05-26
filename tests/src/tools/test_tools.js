@@ -92,7 +92,7 @@ describe('POST /tools', () => {
       .type('application/json')
       .send(dataToSave)
       .end((err, res) => {
-        res.should.have.status(200);
+        res.should.have.status(201);
         res.body.should.be.a('object');
 
         Object.entries(dataToSave).forEach((prop) => {
@@ -150,7 +150,7 @@ describe('DELETE /tools/:id', () => {
       chai.request(app)
         .del(`/tools/${result.id}`)
         .end((errId, resId) => {
-          resId.should.have.status(200);
+          resId.should.have.status(204);
           Tool.collection.countDocuments().then((count) => {
             chai.assert.equal(count, 0);
           });
