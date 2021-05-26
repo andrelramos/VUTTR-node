@@ -1,10 +1,12 @@
-name: tests
+name: ci-pipeline
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on pull request events but only for the master branch
   pull_request:
     branches: [ master ]
+  push:
+    branches:
+      - master
 
   # Allows to run this workflow manually
   workflow_dispatch:
@@ -19,6 +21,7 @@ jobs:
       # Get package.json nodejs version
       - run: |
           echo "NODE_VERSION=$(cat package.json | jq .engines.node | sed 's/"//g')" >> $GITHUB_ENV
+          echo "APPLICATION_VERSION=$(cat package.json | jq .version | sed 's/"//g')" >> $GITHUB_ENV
 
       # Installing nodejs
       - uses: actions/setup-node@v2
@@ -33,3 +36,16 @@ jobs:
 
       # Running tests
       - run: sh run-tests-sandbox.sh
+
+      # Creating release
+      - if: github.ref == 'refs/heads/master'
+        name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ env.APPLICATION_VERSION }}
+          release_name: Release ${{ env.APPLICATION_VERSION }}
+          draft: false
+          prerelease: false
