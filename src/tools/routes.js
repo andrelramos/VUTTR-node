@@ -1,34 +1,31 @@
-const express = require('express')
-const controller = require('./controllers.js')
+const express = require('express');
+const mongoose = require('mongoose');
+const controller = require('./controllers');
 
-const router = express.Router()
+const router = express.Router();
 
 /* GET users listing. */
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
+  const result = await controller.getTools(req.query.tag);
+  res.json(result);
+});
+
+router.post('/', async (req, res) => {
   try {
-    let result = await controller.getTools(req.query.tag)
-    res.json(result)
-  } catch {
-    res.status(404)
+    const result = await controller.saveTool(req.body);
+    res.status(201).json(result);
+  } catch (err) {
+    if (err instanceof mongoose.Error.ValidationError) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(500);
+    }
   }
 });
 
-router.post('/', async (req, res, next) => {
-  try {
-    let result = await controller.saveTool(req.body)
-    res.json(result)
-  } catch {
-    res.status(404)
-  }
-})
+router.delete('/:id', async (req, res) => {
+  await controller.deleteTool(req.params.id);
+  res.sendStatus(204);
+});
 
-router.delete('/:id', async (req, res, next) => {
-  try {
-    let result = await controller.deleteTool(req.params.id)
-    res.json(result)
-  } catch {
-    res.status(404)
-  }
-})
-
-module.exports = router
+module.exports = router;

@@ -1,20 +1,31 @@
-var mongoose = require('mongoose')
-var express = require('express')
-var logger = require('morgan')
-var swaggerUi = require('swagger-ui-express')
-var toolsRouter = require('./src/tools/routes')
-var swaggerDocument = require('./swagger.json')
+const mongoose = require('mongoose');
+const express = require('express');
+const logger = require('morgan');
+const swaggerUi = require('swagger-ui-express');
+const dotenv = require('dotenv');
+const toolsRouter = require('./src/tools/routes');
+const swaggerDocument = require('./swagger.json');
 
-var app = express()
+// Application settings
+const app = express();
+const port = 3000;
+dotenv.config();
 
-app.use(logger('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+// Configs middlewares
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+// Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/tools', toolsRouter)
+// Application routes
+app.use('/tools', toolsRouter);
 
-mongoose.connect(process.env.MONGO_URI,  {useNewUrlParser: true})
+// Connection with database
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
 
-module.exports = app
+// Starting express server
+app.listen(port);
+
+module.exports = app;

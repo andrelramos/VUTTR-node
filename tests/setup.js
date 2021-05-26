@@ -1,9 +1,13 @@
-beforeEach('test hooks', (done) => {
-    let mongoose = require('mongoose')
-    /* Connect to the DB */
-    mongoose.connect(process.env.MONGO_URI, () => {
-        /* Drop the DB */
-        mongoose.connection.db.dropDatabase()
-        done()
-    })
-})
+const mongoose = require('mongoose');
+
+beforeEach('starts mongodb connection', (done) => {
+  /* Connect to the DB before each test */
+  mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }, async () => {
+    /* Drop the DB */
+    if (mongoose.connection.db !== undefined) {
+      await mongoose.connection.db.dropDatabase();
+    }
+
+    done();
+  });
+});
