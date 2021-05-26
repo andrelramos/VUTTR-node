@@ -11,8 +11,3 @@ beforeEach('starts mongodb connection', (done) => {
     done();
   });
 });
-
-afterEach('closes mongodb connection', (done) => {
-  mongoose.connection.close();
-  done();
-});
