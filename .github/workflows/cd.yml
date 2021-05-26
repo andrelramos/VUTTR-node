@@ -20,7 +20,7 @@ jobs:
       
       # Get package.json nodejs version
       - run: |
-          echo "TAG=${{ env.REGISTRY_URL }}:$(cat package.json | jq .engines.node | sed 's/"//g')" >> $GITHUB_ENV
+          echo "TAG=${{ env.REGISTRY_URL }}:$(cat package.json | jq .version | sed 's/"//g')" >> $GITHUB_ENV
 
       # Setup gcloud CLI
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
