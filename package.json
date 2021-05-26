@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint *.js src/** tests/**",
     "start": "node app.js",
-    "test": "mocha ./tests --recursive --exit"
+    "test": "nyc --check-coverage --lines 90 mocha ./tests --recursive --exit"
   },
   "pre-commit": [
     "lint"
@@ -32,6 +32,7 @@
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-security": "^1.4.0",
     "mocha": "^6.1.4",
+    "nyc": "^15.1.0",
     "pre-commit": "^1.2.2",
     "rimraf": "^2.6.3"
   }
