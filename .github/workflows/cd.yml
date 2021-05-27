@@ -2,9 +2,8 @@ name: cd-pipeline
 
 # Controls when the action will run. 
 on:
-  create:
-    tags:
-      - v*
+  release:
+    types: [created]
 
   # Allows to run this workflow manually
   workflow_dispatch:
