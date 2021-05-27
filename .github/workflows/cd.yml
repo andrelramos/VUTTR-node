@@ -54,6 +54,7 @@ jobs:
           service: vuttr
           image: ${{ env.TAG }}
           credentials: ${{ secrets.GCP_SA_KEY }}
+          env_vars: MONGO_URI=${{ secrets.MONGO_URI }},ENV=PRODUCTION
 
 
         
