@@ -9,7 +9,11 @@ const swaggerDocument = require('./swagger.json');
 // Application settings
 const app = express();
 const port = 3000;
-dotenv.config();
+
+// Setting up local environment variables
+if (process.env.ENV !== 'PRODUCTION') {
+  dotenv.config();
+}
 
 // Configs middlewares
 app.use(logger('dev'));

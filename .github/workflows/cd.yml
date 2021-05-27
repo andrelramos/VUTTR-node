@@ -2,9 +2,15 @@ name: cd-pipeline
 
 # Controls when the action will run. 
 on:
+<<<<<<< HEAD
+  create:
+    tags:
+      - v*
+=======
   release:
     types:
       - published
+>>>>>>> 55c6b0c62e8527b98b632387f7acd576f56acc32
 
   # Allows to run this workflow manually
   workflow_dispatch:
@@ -13,6 +19,40 @@ jobs:
   deploy_on_cloud_run:
     name: Deploy app on Google Cloud Run
     runs-on: ubuntu-latest
+<<<<<<< HEAD
+    env:
+      REGISTRY_URL: gcr.io/vuttr-bossabox-314921/vuttr
+    steps:
+      - uses: actions/checkout@v2
+      
+      # Get package.json nodejs version
+      - run: |
+          echo "TAG=${{ env.REGISTRY_URL }}:$(cat package.json | jq .version | sed 's/"//g')" >> $GITHUB_ENV
+
+      # Setup gcloud CLI
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '270.0.0'
+          service_account_key: ${{ secrets.GCP_SA_KEY }} 
+
+      # Configure docker to use the gcloud command-line tool as a credential helper
+      - run: |
+          # Set up docker to authenticate
+          # via gcloud command-line tool.
+          gcloud auth configure-docker
+
+      # Build the Docker image
+      - name: Build
+        run: |
+          docker build -t ${{ env.TAG }} .
+
+      # Push the Docker image to Google Container Registry
+      - name: Publish
+        run: |
+          docker push ${{ env.TAG }}
+          docker tag ${{ env.TAG }} ${{ env.REGISTRY_URL }}:latest
+          docker push ${{ env.REGISTRY_URL }}:latest
+=======
     steps:
       - uses: actions/checkout@v2
       
@@ -24,6 +64,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: andrelramos/vuttr
           tag_with_ref: true
+>>>>>>> 55c6b0c62e8527b98b632387f7acd576f56acc32
 
       # Deploy on cloud run
       - name: Deploy to Cloud Run
@@ -31,8 +72,14 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v0.5.0
         with:
           service: vuttr
+<<<<<<< HEAD
+          image: ${{ env.TAG }}
+          credentials: ${{ secrets.GCP_SA_KEY }}
+          env_vars: MONGO_URI=${{ secrets.MONGO_URI }},ENV=PRODUCTION
+=======
           image: andrelramos/vuttr
           credentials: ${{ secrets.GCP_SA_KEY }}
+>>>>>>> 55c6b0c62e8527b98b632387f7acd576f56acc32
 
 
         
