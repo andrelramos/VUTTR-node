@@ -157,7 +157,6 @@
             }
           },
           "400": {
-<<<<<<< HEAD
             "description": "Invalid tool schema has been informed",
             "content": {
               "application/json": {
@@ -166,9 +165,6 @@
                 }
               }
             }
-=======
-            "description": "Invalid tool schema has been informed"
->>>>>>> f09041d1c2a1352b1e550c4fecd75bcfe87bb4b5
           }
         }
       },
