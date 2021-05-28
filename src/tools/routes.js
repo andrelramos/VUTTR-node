@@ -1,6 +1,6 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const controller = require('./controllers');
+const errors = require('../utils/errors');
 
 const router = express.Router();
 
@@ -15,8 +15,8 @@ router.post('/', async (req, res) => {
     const result = await controller.saveTool(req.body);
     res.status(201).json(result);
   } catch (err) {
-    if (err instanceof mongoose.Error.ValidationError) {
-      res.sendStatus(400);
+    if (err instanceof errors.InvalidSchema) {
+      res.status(400).json(err.details);
     } else {
       res.sendStatus(500);
     }

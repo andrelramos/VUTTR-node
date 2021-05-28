@@ -67,6 +67,46 @@
             "$ref": "#/components/schemas/Tool"
           }
         ]
+      },
+      "InvalidSchema": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "\"link\" must be a valid uri"
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "example": "link"
+              }
+            },
+            "type": {
+              "type": "string",
+              "example": "string.uri"
+            },
+            "context": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "example": "link"
+                },
+                "value": {
+                  "type": "string",
+                  "example": "notion"
+                },
+                "key": {
+                  "type": "string",
+                  "example": "link"
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -117,7 +157,14 @@
             }
           },
           "400": {
-            "description": "Invalid tool schema has been informed"
+            "description": "Invalid tool schema has been informed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidSchema"
+                }
+              }
+            }
           }
         }
       },
