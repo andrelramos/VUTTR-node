@@ -22,7 +22,6 @@ jobs:
       # Get package.json nodejs version
       - run: |
           echo "TAG=${{ env.REGISTRY_URL }}:$(cat package.json | jq .version | sed 's/"//g')" >> $GITHUB_ENV
-
       # Setup gcloud CLI
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
@@ -34,19 +33,16 @@ jobs:
           # Set up docker to authenticate
           # via gcloud command-line tool.
           gcloud auth configure-docker
-
       # Build the Docker image
       - name: Build
         run: |
           docker build -t ${{ env.TAG }} .
-
       # Push the Docker image to Google Container Registry
       - name: Publish
         run: |
           docker push ${{ env.TAG }}
           docker tag ${{ env.TAG }} ${{ env.REGISTRY_URL }}:latest
           docker push ${{ env.REGISTRY_URL }}:latest
-
       # Deploy on cloud run
       - name: Deploy to Cloud Run
         id: deploy
@@ -56,6 +52,3 @@ jobs:
           image: ${{ env.TAG }}
           credentials: ${{ secrets.GCP_SA_KEY }}
           env_vars: MONGO_URI=${{ secrets.MONGO_URI }},ENV=PRODUCTION
-
-
-        

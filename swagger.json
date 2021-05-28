@@ -3,12 +3,16 @@
   "info": {
     "title": "VUTTR (Very Useful Tools to Remember) API",
     "description": "API to store and manage very useful tools to remember. Using it you can save, read and delete tools in database",
-    "version": "1.0.0"
+    "version": "0.0.8"
   },
   "servers": [
     {
+      "url": "https://vuttr-6ew5k2dgka-uc.a.run.app/",
+      "description": "production server"
+    },
+    {
       "url": "http://localhost:3000/",
-      "description": "development server"
+      "description": "local server"
     }
   ],
   "components": {
@@ -82,8 +86,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successful delete"
+          "204": {
+            "description": "Deleted successfully"
           }
         }
       }
@@ -102,7 +106,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Returns the saved tools",
             "content": {
               "application/json": {
@@ -111,6 +115,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid tool schema has been informed"
           }
         }
       },
