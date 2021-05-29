@@ -20,7 +20,7 @@ class InvalidSchema extends Error {
     this.name = this.constructor.name;
     this.details = details;
 
-    invalidDetailsSchema.assert(this.details);
+    Joi.assert(this.details, invalidDetailsSchema);
   }
 }
 

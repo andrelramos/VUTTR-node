@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint *.js src/** tests/**",
     "start": "node app.js",
-    "test": "nyc --check-coverage --lines 90 mocha ./tests --recursive --exit"
+    "test": "nyc --check-coverage --lines 95 mocha ./tests --recursive --exit"
   },
   "pre-commit": [
     "lint"
