@@ -4,6 +4,7 @@ name: cd-pipeline
 on:
   workflow_run:
     workflows: ["ci-pipeline"]
+    branchs: ["master"]
     types:
       - completed
 
@@ -14,6 +15,7 @@ jobs:
   deploy_on_cloud_run:
     name: Deploy app on Google Cloud Run
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     env:
       REGISTRY_URL: gcr.io/vuttr-bossabox-314921/vuttr
     steps:
