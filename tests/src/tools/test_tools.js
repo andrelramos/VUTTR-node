@@ -1,7 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../../../app');
-const Tool = require('../../../src/tools/models');
+const models = require('../../../src/tools/models');
 
 chai.use(chaiHttp);
 chai.should();
@@ -21,11 +21,11 @@ describe('GET /tools', () => {
   it('response should has saved itens', (done) => {
     const data = {
       title: 'test-title',
-      link: 'test-link',
+      link: 'https://www.google.com',
       description: 'test-description',
       tags: ['tag1', 'tag2'],
     };
-    const savedTool = new Tool(data);
+    const savedTool = new models.Tool(data);
     savedTool.save().then(() => {
       chai.request(app)
         .get('/tools')
@@ -44,21 +44,21 @@ describe('GET /tools', () => {
   });
 
   it('response should has tools with the test tag', (done) => {
-    const tool1 = new Tool({
+    const tool1 = new models.Tool({
       title: 'test-title',
-      link: 'test-link',
+      link: 'https://www.google.com',
       description: 'test-description',
       tags: ['tag1', 'tag2'],
     });
 
-    const tool2 = new Tool({
+    const tool2 = new models.Tool({
       title: 'test-title2',
       link: 'test-link2',
       description: 'test-description2',
       tags: ['tag1', 'test'],
     });
 
-    Tool.collection.insertMany([tool1, tool2]).then(() => {
+    models.Tool.collection.insertMany([tool1, tool2]).then(() => {
       chai.request(app)
         .get('/tools?tag=test')
         .end((err, res) => {
@@ -82,7 +82,7 @@ describe('POST /tools', () => {
   it('save valid tool', (done) => {
     const dataToSave = {
       title: 'test-title',
-      link: 'test-link',
+      link: 'https://www.google.com',
       description: 'test-description',
       tags: ['tag1', 'tag2'],
     };
@@ -105,7 +105,7 @@ describe('POST /tools', () => {
 
   it('try save invalid tools (no title)', (done) => {
     const item = { // No title
-      link: 'test-link',
+      link: 'https://www.google.com',
       description: 'test-description',
       tags: ['tag1', 'tag2'],
     };
@@ -140,9 +140,9 @@ describe('POST /tools', () => {
 
 describe('DELETE /tools/:id', () => {
   it('delete a tool', (done) => {
-    const tool = new Tool({
+    const tool = new models.Tool({
       title: 'test-title',
-      link: 'test-link',
+      link: 'https://www.google.com',
       description: 'test-description',
       tags: ['tag1', 'tag2'],
     });
@@ -151,7 +151,7 @@ describe('DELETE /tools/:id', () => {
         .del(`/tools/${result.id}`)
         .end((errId, resId) => {
           resId.should.have.status(204);
-          Tool.collection.countDocuments().then((count) => {
+          models.Tool.collection.countDocuments().then((count) => {
             chai.assert.equal(count, 0);
           });
 

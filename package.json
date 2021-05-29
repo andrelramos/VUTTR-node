@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint *.js src/** tests/**",
     "start": "node app.js",
-    "test": "nyc --check-coverage --lines 90 mocha ./tests --recursive --exit"
+    "test": "nyc --check-coverage --lines 95 mocha ./tests --recursive --exit"
   },
   "pre-commit": [
     "lint"
@@ -19,8 +19,11 @@
     "debug": "~2.6.9",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "joi": "^17.4.0",
+    "joi-to-swagger": "^5.2.0",
+    "joigoose": "^8.0.1",
     "mongodb": "^3.2.7",
-    "mongoose": "^5.5.13",
+    "mongoose": "^5.12.12",
     "morgan": "~1.9.1",
     "swagger-ui-express": "^4.0.6"
   },

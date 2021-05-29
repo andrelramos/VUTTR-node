@@ -3,8 +3,8 @@ const express = require('express');
 const logger = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const dotenv = require('dotenv');
-const toolsRouter = require('./src/tools/routes');
-const swaggerDocument = require('./swagger.json');
+const toolsRouter = require('./src/tools/routers');
+const swaggerDocument = require('./src/swagger');
 
 // Application settings
 const app = express();

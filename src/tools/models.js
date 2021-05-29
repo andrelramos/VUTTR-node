@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
+const joigoose = require('joigoose')(mongoose);
+const schemas = require('./schemas');
 
-const Tool = mongoose.model('Tool', {
-  title: { type: String, required: true },
-  link: { type: String, required: true },
-  description: { type: String, required: false },
-  tags: [String],
-});
+const Tool = mongoose.model('Tool', mongoose.Schema(
+  joigoose.convert(schemas.toolSchema),
+));
 
-module.exports = Tool;
+module.exports = { Tool };
