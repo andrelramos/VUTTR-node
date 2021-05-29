@@ -18,7 +18,6 @@ router.post('/', async (req, res) => {
     if (err instanceof errors.InvalidSchema) {
       res.status(400).json(err.details);
     } else {
-      console.log(err);
       res.sendStatus(500);
     }
   }
