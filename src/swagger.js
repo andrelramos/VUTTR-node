@@ -1,5 +1,6 @@
 const j2s = require('joi-to-swagger');
 const tools = require('./tools/schemas');
+const auth = require('./auth/schemas');
 const errors = require('./utils/errors');
 
 const swaggerDocument = {
@@ -43,9 +44,33 @@ const swaggerDocument = {
         ],
       },
       InvalidSchema: j2s(errors.invalidDetailsSchema).swagger,
+      User: j2s(auth.userSchema).swagger,
     },
   },
   paths: {
+    '/auth/register': {
+      post: {
+        summary: 'Register a new user',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/User',
+              },
+            },
+          },
+        },
+      },
+    },
+    '/auth/login': {
+      post: {
+        summary: 'User login',
+        requestBody: {
+          required: true,
+        },
+      },
+    },
     '/tools/{id}': {
       delete: {
         summary: 'Delete a tool from database',
