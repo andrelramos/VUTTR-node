@@ -41,3 +41,6 @@ When a code is pushed to the master branch the CD pipeline will be trigged and t
 - Create a github release based on version of package.json
 - Build a docker image based on `Dockerfile`
 - Deploy on Google Cloud Run and inject production secrets stored on github secrets
+
+# Production
+You can try the application running on production environment [clicking here](https://vuttr-6ew5k2dgka-uc.a.run.app/).
