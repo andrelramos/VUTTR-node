@@ -1,5 +1,9 @@
 const Joi = require('joi');
 
+/**
+ * Represents a valid schema for error details informed on InvalidSchema error
+ * @see {@link InvalidSchema}
+ */
 const invalidDetailsSchema = Joi.array().items(Joi.object({
   message: Joi.string(),
   path: Joi.array().items(
@@ -13,6 +17,7 @@ const invalidDetailsSchema = Joi.array().items(Joi.object({
   }),
 }));
 
+/** Custom error for invalid Joi schemas */
 class InvalidSchema extends Error {
   constructor(schemaName, details) {
     super(`Invalid ${schemaName}`);
